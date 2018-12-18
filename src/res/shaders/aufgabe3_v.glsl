@@ -61,13 +61,13 @@ void oneColor() {
 
 void chooseTheme(){
     switch(theme){
-        case(1):
+        case(0):
         oneColor();
         break;
-        case(2):
+        case(1):
         normalVecctorColor();
         break;
-        case(3):
+        case(2):
         staticColorsCube();
         break;
     }

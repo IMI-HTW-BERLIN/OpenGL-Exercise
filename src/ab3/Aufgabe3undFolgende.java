@@ -18,6 +18,7 @@ public class Aufgabe3undFolgende extends AbstractOpenGLBase {
     float xRotation;
     float yRotation;
     int theme = 0;
+    boolean[] objectSelected;
     private List<Cube> cubes = new ArrayList<>();
     /*------------------------------------------------------------------------------------------------------------*/
     private ShaderProgram shaderProgram;
@@ -37,11 +38,9 @@ public class Aufgabe3undFolgende extends AbstractOpenGLBase {
         shaderProgram = new ShaderProgram("aufgabe3");
         glUseProgram(shaderProgram.getId());
 
-        cubes.add(new Cube(-2,-1,-2,"aufgabe3"));
-        cubes.add(new Cube(0,1,-3,"aufgabe3"));
-        cubes.add(new Cube(1,0,-2,"aufgabe3"));
-        cubes.add(new Cube(-1.5f,2,-4,"aufgabe3"));
-        cubes.add(new Cube(2,-2,-2.5f,"aufgabe3"));
+        cubes.add(new Cube(new Vector3(0,0,-2), 1, Object.Transformation.ROTATE_X, "aufgabe3"));
+        cubes.add(new Cube(new Vector3(-1,2,-2), 1, Object.Transformation.ROTATE_Y, "aufgabe3"));
+        cubes.add(new Cube(new Vector3(2,-1,-3), 1, Object.Transformation.ROTATE_XY, "aufgabe3"));
 
         /*------------------------------------------------------------------------------------------------------------*/
         Matrix4 projectMat = new Matrix4(0.4F, 10F, 2, 2);
@@ -66,7 +65,11 @@ public class Aufgabe3undFolgende extends AbstractOpenGLBase {
     protected void render() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        cubes.forEach(Cube::render);
+        for (int i = 0; i < cubes.size(); i++) {
+            if(objectSelected[i]) cubes.get(i).render();
+        }
+        cubes.forEach(e -> e.setAngleX(xRotation));
+        cubes.forEach(e -> e.setAngleY(yRotation));
 
         int focusID = glGetUniformLocation(shaderProgram.getId(), "focus");
         int ambientLightID = glGetUniformLocation(shaderProgram.getId(), "ambientLightIntensity");
@@ -85,6 +88,8 @@ public class Aufgabe3undFolgende extends AbstractOpenGLBase {
 
         int themeID = glGetUniformLocation(shaderProgram.getId(), "theme");
         glUniform1i(themeID, theme);
+
+
     }
 
     @Override

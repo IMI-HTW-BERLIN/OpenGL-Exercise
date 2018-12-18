@@ -1,6 +1,6 @@
 package ab3;
 
-import javafx.collections.FXCollections;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -28,13 +28,14 @@ public class testController {
     public Label yRotationLabel;
 
     public ComboBox themes;
-    public ComboBox objects;
+    public Pane checkBoxList;
 
     private Aufgabe3undFolgende aufgabe;
 
 
     public void go() {
         aufgabe = new Aufgabe3undFolgende();
+        changeObject();
         aufgabe.start("CG Aufgabe 3", 1000, 1000);
 
     }
@@ -93,22 +94,26 @@ public class testController {
     public void changeTheme() {
         switch (themes.getValue().toString()) {
             case ("Red"):
-                aufgabe.theme = 1;
-                System.out.println("Normals");
+                aufgabe.theme = 0;
                 break;
             case ("Normals"):
-                aufgabe.theme = 2;
-                System.out.println("Normals");
+                aufgabe.theme = 1;
                 break;
             case ("Different"):
-                aufgabe.theme = 3;
-                System.out.println(("Different"));
+                aufgabe.theme = 2;
                 break;
             default:
                 aufgabe.theme = 0;
-                System.out.println("Nothing");
                 break;
         }
+    }
+
+    public void changeObject() {
+        boolean[] objectSelected = new boolean[checkBoxList.getChildren().size()];
+        for (int i = 0; i < checkBoxList.getChildren().size(); i++) {
+            objectSelected[i] = ((CheckBox) checkBoxList.getChildren().get(i)).isSelected();
+        }
+        aufgabe.objectSelected = objectSelected;
     }
 
 }

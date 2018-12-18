@@ -9,15 +9,6 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="ab3.testController">
   <children>
-    <ComboBox fx:id="objects" layoutX="20.0" layoutY="42.0" prefHeight="21.0" prefWidth="135.0">
-      <items>
-        <FXCollections fx:factory="observableArrayList">
-          <String fx:value="Item 1" />
-          <String fx:value="Item 2" />
-          <String fx:value="Item 3" />
-        </FXCollections>
-      </items>
-    </ComboBox>
     <ComboBox fx:id="themes" layoutX="165.0" layoutY="42.0" onAction="#changeTheme" prefHeight="21.0" prefWidth="135.0" promptText="Themes">
       <items>
         <FXCollections fx:factory="observableArrayList">
@@ -39,9 +30,9 @@
     <Label fx:id="diffuseStrengthLabel" layoutX="601.0" layoutY="38.0" text="Diffuse Strength: " />
     <Slider fx:id="specularStrength" blockIncrement="0.01" layoutX="599.0" layoutY="92.0" majorTickUnit="0.1" max="1.0" minorTickCount="1" onKeyReleased="#setSpecularStrength" onMouseClicked="#setSpecularStrength" onMouseDragged="#setSpecularStrength" showTickMarks="true" value="0.4" />
     <Label fx:id="specularStrengthLabel" layoutX="601.0" layoutY="76.0" text="Specular Strength" />
-    <Slider fx:id="xRotation" blockIncrement="0.01" layoutX="742.0" layoutY="43.0" majorTickUnit="0.1" max="1.0" minorTickCount="1" onKeyReleased="#setxRotation" onMouseClicked="#setxRotation" onMouseDragged="#setxRotation" prefWidth="97.0" showTickMarks="true" />
+    <Slider fx:id="xRotation" blockIncrement="1.0" layoutX="742.0" layoutY="43.0" majorTickUnit="90.0" max="360.0" minorTickCount="45" onKeyReleased="#setxRotation" onMouseClicked="#setxRotation" onMouseDragged="#setxRotation" prefWidth="97.0" showTickMarks="true" />
     <Label fx:id="xRotationLabel" layoutX="742.0" layoutY="26.0" text="xRotation" />
-    <Slider fx:id="yRotation" blockIncrement="0.01" layoutX="839.0" layoutY="43.0" majorTickUnit="0.1" max="1.0" minorTickCount="1" onKeyReleased="#setyRotation" onMouseClicked="#setyRotation" onMouseDragged="#setyRotation" prefWidth="97.0" showTickMarks="true" />
+    <Slider fx:id="yRotation" blockIncrement="1.0" layoutX="839.0" layoutY="43.0" majorTickUnit="90.0" max="360.0" minorTickCount="45" onKeyReleased="#setyRotation" onMouseClicked="#setyRotation" onMouseDragged="#setyRotation" prefWidth="97.0" showTickMarks="true" />
     <Label fx:id="yRotationLabel" layoutX="839.0" layoutY="27.0" text="yRotation" />
     <Button layoutX="756.0" layoutY="76.0" mnemonicParsing="false" onAction="#go" text="(Open)²GL" />
     <Button layoutX="858.0" layoutY="76.0" mnemonicParsing="false" onAction="#update" text="Start" />
@@ -54,5 +45,17 @@
         </FXCollections>
       </items>
     </ComboBox>
+    <Pane fx:id="checkBoxList" prefHeight="119.0" prefWidth="165.0">
+      <children>
+        <CheckBox  layoutX="18.0" layoutY="15.0" mnemonicParsing="false" text="Cube 1" onAction="#changeObject"/>
+        <CheckBox  layoutX="18.0" layoutY="39.0" mnemonicParsing="false" text="Cube 2" onAction="#changeObject"/>
+        <CheckBox  layoutX="18.0" layoutY="65.0" mnemonicParsing="false" text="Cube 3" onAction="#changeObject"/>
+        <CheckBox  layoutX="18.0" layoutY="89.0" mnemonicParsing="false" text="Cube 4" onAction="#changeObject"/>
+        <CheckBox  layoutX="84.0" layoutY="16.0" mnemonicParsing="false" text="Object 1" onAction="#changeObject"/>
+        <CheckBox  layoutX="84.0" layoutY="39.0" mnemonicParsing="false" text="Object 2" onAction="#changeObject"/>
+        <CheckBox  layoutX="84.0" layoutY="65.0" mnemonicParsing="false" text="Object 3" onAction="#changeObject"/>
+        <CheckBox  layoutX="84.0" layoutY="89.0" mnemonicParsing="false" text="Object 4" onAction="#changeObject"/>
+      </children>
+    </Pane>
   </children>
 </AnchorPane>

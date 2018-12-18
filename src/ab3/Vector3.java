@@ -37,4 +37,14 @@ class Vector3 {
     float[] getAsArray(){
         return vector;
     }
+
+    float x(){
+        return vector[0];
+    }
+    float y(){
+        return vector[1];
+    }
+    float z(){
+        return vector[2];
+    }
 }
