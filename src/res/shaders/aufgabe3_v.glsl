@@ -70,6 +70,12 @@ void chooseTheme(){
         case(2):
         staticColorsCube();
         break;
+        case(3):
+        staticColorsTriangeThing();
+        break;
+        case(4):
+        rainbow();
+        break;
     }
 }
 

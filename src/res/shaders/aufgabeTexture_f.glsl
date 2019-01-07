@@ -1,9 +1,8 @@
 #version 400
 
-out vec3 pixelColor;
-in vec3 color;
 in vec4 pixelPosition;
 in vec3 normalVector;
+in vec3 color;
 
 uniform float lightIntensity;
 uniform vec3 lightPos;
@@ -14,6 +13,10 @@ uniform float specularStrength;
 
 uniform float ambientLightIntensity;
 uniform float focus;
+
+uniform sampler2D smplr;
+in vec2 uvCoordiantes;
+out vec4 pixelColor;
 
 
 
@@ -35,5 +38,7 @@ void main() {
 
     float light = lightAmbient + lightDiffuse + lightSpecular;
 
-    pixelColor = color * light;
+    pixelColor = texture(smplr, uvCoordiantes);
+
+
 }

@@ -4,6 +4,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
 public class testController {
@@ -29,6 +30,8 @@ public class testController {
 
     public ComboBox themes;
     public Pane checkBoxList;
+    public Slider rotationSpeed;
+    public Label rotationSpeedLabel;
 
     private Aufgabe3undFolgende aufgabe;
 
@@ -47,8 +50,8 @@ public class testController {
         setFocus();
         setLightIntensity();
         setSpecularStrength();
-        setxRotation();
-        setyRotation();
+        setXRotation();
+        setYRotation();
     }
 
     public void setLightIntensity() {
@@ -81,12 +84,12 @@ public class testController {
         specularStrengthLabel.setText("Specular Strength: " + String.format("%.2f", specularStrength.getValue()));
     }
 
-    public void setxRotation() {
+    public void setXRotation() {
         aufgabe.xRotation = (float) xRotation.getValue();
         xRotationLabel.setText("X Rotation: " + String.format("%.2f", xRotation.getValue()));
     }
 
-    public void setyRotation() {
+    public void setYRotation() {
         aufgabe.yRotation = (float) yRotation.getValue();
         yRotationLabel.setText("Y Rotation: " + String.format("%.2f", yRotation.getValue()));
     }
@@ -102,6 +105,21 @@ public class testController {
             case ("Different"):
                 aufgabe.theme = 2;
                 break;
+            case ("Different Triangle"):
+                aufgabe.theme = 3;
+                break;
+            case ("Rainbow"):
+                aufgabe.theme = 4;
+                break;
+            case ("Texture1"):
+                aufgabe.theme = 10;
+                break;
+            case ("Texture2"):
+                aufgabe.theme = 11;
+                break;
+            case ("Texture3"):
+                aufgabe.theme = 12;
+                break;
             default:
                 aufgabe.theme = 0;
                 break;
@@ -116,4 +134,8 @@ public class testController {
         aufgabe.objectSelected = objectSelected;
     }
 
+    public void setRotationSpeed() {
+        aufgabe.rotationSpeed = (float) rotationSpeed.getValue();
+        rotationSpeedLabel.setText("Rotation Speed: " + String.format("%.2f", rotationSpeed.getValue()));
+    }
 }

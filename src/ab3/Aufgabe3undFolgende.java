@@ -6,7 +6,6 @@ import lenz.opengl.AbstractOpenGLBase;
 import lenz.opengl.ShaderProgram;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Aufgabe3undFolgende extends AbstractOpenGLBase {
@@ -17,16 +16,18 @@ public class Aufgabe3undFolgende extends AbstractOpenGLBase {
     float specularStrength;
     float xRotation;
     float yRotation;
+    float rotationSpeed;
     int theme = 0;
+    boolean textureLoaded = false;
     boolean[] objectSelected;
-    private List<Cube> cubes = new ArrayList<>();
+    private List<Object> objects = new ArrayList<>();
     /*------------------------------------------------------------------------------------------------------------*/
     private ShaderProgram shaderProgram;
     LightSource light;
     //----------------------------------------------------------------------------------------------------
 
     public static void main(String[] args) {
-        new Aufgabe3undFolgende().start("CG Aufgabe 3", 1000, 1000);
+        new Aufgabe3undFolgende().start("CG Aufgabe 3", 2000, 2000);
     }
 
     Aufgabe3undFolgende() {
@@ -38,9 +39,12 @@ public class Aufgabe3undFolgende extends AbstractOpenGLBase {
         shaderProgram = new ShaderProgram("aufgabe3");
         glUseProgram(shaderProgram.getId());
 
-        cubes.add(new Cube(new Vector3(0,0,-2), 1, Object.Transformation.ROTATE_X, "aufgabe3"));
-        cubes.add(new Cube(new Vector3(-1,2,-2), 1, Object.Transformation.ROTATE_Y, "aufgabe3"));
-        cubes.add(new Cube(new Vector3(2,-1,-3), 1, Object.Transformation.ROTATE_XY, "aufgabe3"));
+        objects.add(new Cube(new Vector3(0,0,-2), 1, Object.Transformation.ROTATE_X, "aufgabe3"));
+        objects.add(new Cube(new Vector3(-1,2,-2), 1, Object.Transformation.ROTATE_Y, "aufgabe3"));
+        objects.add(new Cube(new Vector3(2,-1,-3), 1, Object.Transformation.ROTATE_XY, "aufgabe3"));
+        objects.add(new Cube(new Vector3(2,-1,-3), 1, Object.Transformation.ROTATE_XY, "aufgabe3"));
+
+        //objects.add(new TriangleThing(new Vector3(-1,-2,-3), 1, Object.Transformation.ROTATE_RND, "aufgabe3"));
 
         /*------------------------------------------------------------------------------------------------------------*/
         Matrix4 projectMat = new Matrix4(0.4F, 10F, 2, 2);
@@ -58,18 +62,30 @@ public class Aufgabe3undFolgende extends AbstractOpenGLBase {
     }
     @Override
     public void update() {
-        cubes.forEach(Cube::update);
+        objects.forEach(Object::update);
+        if(theme >= 10 && !textureLoaded) {
+            objects.forEach(e -> e.changeShader("aufgabeTexture"));
+            textureLoaded = true;
+        }
+        else if(theme < 10 && textureLoaded) {
+            objects.forEach(e -> e.changeShader("aufgabe3"));
+            textureLoaded = false;
+        }
     }
 
     @Override
     protected void render() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        for (int i = 0; i < cubes.size(); i++) {
-            if(objectSelected[i]) cubes.get(i).render();
+        for (int i = 0; i < objects.size(); i++) {
+            if(objectSelected[i]) objects.get(i).render();
         }
-        cubes.forEach(e -> e.setAngleX(xRotation));
-        cubes.forEach(e -> e.setAngleY(yRotation));
+        objects.forEach(e -> e.setAngleX(xRotation));
+        objects.forEach(e -> e.setAngleY(yRotation));
+        objects.forEach(e -> e.setRotationSpeed(rotationSpeed));
+
+
+
 
         int focusID = glGetUniformLocation(shaderProgram.getId(), "focus");
         int ambientLightID = glGetUniformLocation(shaderProgram.getId(), "ambientLightIntensity");

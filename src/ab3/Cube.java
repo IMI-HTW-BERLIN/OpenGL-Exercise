@@ -1,77 +1,112 @@
 package ab3;
 
-import lenz.opengl.AbstractOpenGLBase;
-import lenz.opengl.ShaderProgram;
+class Cube extends Object{
 
-import java.util.Arrays;
-import java.util.Random;
-
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
-import static org.lwjgl.opengl.GL30.glGenVertexArrays;
-
-public class Cube extends Object{
-
-    public Cube(Vector3 position, float size, Transformation transformation,String shader) {
-        init(cube(size), position, transformation,shader);
+    Cube(Vector3 position, float size, Transformation transformation,String shader) {
+        init(cube(size/2), position, transformation,shader, uvCoordiantes());
     }
 
     private float[] cube(float size) {
         return new float[]{
-                size/2, -size/2, size/2,
-                size/2, size/2, size/2,
-                -size/2, -size/2, size/2,
+                size, -size, size,
+                size, size, size,
+                -size, -size, size,
 
-                -size/2, size/2, size/2,
-                -size/2, -size/2, size/2,
-                size/2, size/2, size/2,
-
-
-                size/2, -size/2, size/2,
-                size/2, -size/2, -size/2,
-                size/2, size/2, -size/2,
-
-                size/2, size/2, -size/2,
-                size/2, size/2, size/2,
-                size/2, -size/2, size/2,
+                -size, size, size,
+                -size, -size, size,
+                size, size, size,
 
 
-                -size/2, size/2, size/2,
-                size/2, size/2, size/2,
-                size/2, size/2, -size/2,
+                size, -size, size,
+                size, -size, -size,
+                size, size, -size,
 
-                size/2, size/2, -size/2,
-                -size/2, size/2, -size/2,
-                -size/2, size/2, size/2,
-
-
-                -size/2, size/2, -size/2,
-                size/2, size/2, -size/2,
-                size/2, -size/2, -size/2,
-
-                size/2, -size/2, -size/2,
-                -size/2, -size/2, -size/2,
-                -size/2, size/2, -size/2,
+                size, size, -size,
+                size, size, size,
+                size, -size, size,
 
 
-                -size/2, -size/2, size/2,
-                -size/2, -size/2, -size/2,
-                size/2, -size/2, -size/2,
+                -size, size, size,
+                size, size, size,
+                size, size, -size,
 
-                size/2, -size/2, -size/2,
-                size/2, -size/2, size/2,
-                -size/2, -size/2, size/2,
+                size, size, -size,
+                -size, size, -size,
+                -size, size, size,
 
 
-                -size/2, -size/2, size/2,
-                -size/2, size/2, size/2,
-                -size/2, size/2, -size/2,
+                -size, size, -size,
+                size, size, -size,
+                size, -size, -size,
 
-                -size/2, size/2, -size/2,
-                -size/2, -size/2, -size/2,
-                -size/2, -size/2, size/2,
+                size, -size, -size,
+                -size, -size, -size,
+                -size, size, -size,
 
+
+                -size, -size, size,
+                -size, -size, -size,
+                size, -size, -size,
+
+                size, -size, -size,
+                size, -size, size,
+                -size, -size, size,
+
+
+                -size, -size, size,
+                -size, size, size,
+                -size, size, -size,
+
+                -size, size, -size,
+                -size, -size, -size,
+                -size, -size, size,
+
+        };
+    }
+
+    private float[] uvCoordiantes() {
+        return new float[]{
+                1,-1,
+                1,1,
+                -1,-1,
+                -1,1,
+                -1,-1,
+                1,1,
+
+                -1,1,
+                -1,-1,
+                1,-1,
+                1,-1,
+                1,1,
+                -1,1,
+
+                -1,1,
+                1,1,
+                1,-1,
+                1,-1,
+                -1,-1,
+                -1,1,
+
+                -1,1,
+                1,1,
+                1,-1,
+                1,-1,
+                -1,-1,
+                -1,1,
+
+                -1,1,
+                -1,-1,
+                1,-1,
+                1,-1,
+                1,1,
+                -1,1,
+
+                -1,1,
+                1,1,
+                1,-1,
+                1,-1,
+                -1,-1,
+                -1,1,
         };
     }
 }
