@@ -6,13 +6,13 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class WithOptions extends Application {
+public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        AnchorPane root = FXMLLoader.load(getClass().getResource("test.fxml"));
+        AnchorPane root = FXMLLoader.load(getClass().getResource("View.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Nothing to see here");
+        primaryStage.setTitle("Awesome Controller!!1!");
         primaryStage.show();
     }
 

@@ -12,8 +12,6 @@ out vec4 pixelPosition;
 out vec3 normalVector;
 out vec3 color;
 
-uniform int theme;
-
 
 void main() {
     pixelPosition = mat * vec4(eckenAusJava,1.0);

@@ -20,7 +20,7 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 abstract class Object {
     private ShaderProgram shaderProgram;
     private float[] edges;
-    private float[] uvCoordiantes;
+    private float[] uvCoordinates;
     private Vector3 position;
     private Matrix4 mat = new Matrix4();
     private float angleX = 0;
@@ -34,17 +34,18 @@ abstract class Object {
 
     private Transformation transformation;
 
+    private int vaold;
+
 
     void init(float[] edges, Vector3 position, Transformation transformation, String shader, float[] uvCoordinates) {
         shaderProgram = new ShaderProgram(shader);
         glUseProgram(shaderProgram.getId());
-
         this.edges = edges;
         this.position = position;
         this.transformation = transformation;
-        this.uvCoordiantes = uvCoordinates;
+        this.uvCoordinates = uvCoordinates;
 
-        int vaold = glGenVertexArrays();
+        vaold = glGenVertexArrays();
         glBindVertexArray(vaold);
         int vbold = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vbold);
@@ -78,7 +79,9 @@ abstract class Object {
     }
 
     void render() {
+        glBindVertexArray(vaold);
         glDrawArrays(GL_TRIANGLES, 0, edges.length / 3);
+        glBindVertexArray(0);
 
         int loc = glGetUniformLocation(shaderProgram.getId(), "mat");
         glUniformMatrix4fv(loc, false, mat.getValuesAsArray());
@@ -137,6 +140,7 @@ abstract class Object {
     }
 
     void changeShader(String shader) {
-        init(this.edges, this.position, this.transformation, shader, this.uvCoordiantes);
+        init(this.edges, this.position, this.transformation, shader, this.uvCoordinates);
     }
+
 }

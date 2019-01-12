@@ -18,12 +18,11 @@ public class Aufgabe3undFolgende extends AbstractOpenGLBase {
     float yRotation;
     float rotationSpeed;
     int theme = 0;
-    boolean textureLoaded = false;
     boolean[] objectSelected;
-    private List<Object> objects = new ArrayList<>();
     /*------------------------------------------------------------------------------------------------------------*/
     private ShaderProgram shaderProgram;
-    LightSource light;
+    LightSource light = new LightSource(new Vector3(4f, 0f, 1f), 5f);
+    private List<Object> objects = new ArrayList<>();
     //----------------------------------------------------------------------------------------------------
 
     public static void main(String[] args) {
@@ -31,7 +30,6 @@ public class Aufgabe3undFolgende extends AbstractOpenGLBase {
     }
 
     Aufgabe3undFolgende() {
-
     }
 
     @Override
@@ -39,12 +37,14 @@ public class Aufgabe3undFolgende extends AbstractOpenGLBase {
         shaderProgram = new ShaderProgram("aufgabe3");
         glUseProgram(shaderProgram.getId());
 
-        objects.add(new Cube(new Vector3(0,0,-2), 1, Object.Transformation.ROTATE_X, "aufgabe3"));
-        objects.add(new Cube(new Vector3(-1,2,-2), 1, Object.Transformation.ROTATE_Y, "aufgabe3"));
-        objects.add(new Cube(new Vector3(2,-1,-3), 1, Object.Transformation.ROTATE_XY, "aufgabe3"));
-        objects.add(new Cube(new Vector3(2,-1,-3), 1, Object.Transformation.ROTATE_XY, "aufgabe3"));
+        objects.add(new Cube(new Vector3(0, 0, -2), 1, Object.Transformation.ROTATE_X, "aufgabe3"));
+        objects.add(new Cube(new Vector3(-1, 2, -2), 1, Object.Transformation.ROTATE_Y, "aufgabe3"));
+        objects.add(new Cube(new Vector3(2, -1, -3), 1, Object.Transformation.ROTATE_XY, "aufgabe3"));
+        objects.add(new Cube(new Vector3(0, -1, -6), 1, Object.Transformation.ROTATE_XY, "aufgabe3"));
 
-        //objects.add(new TriangleThing(new Vector3(-1,-2,-3), 1, Object.Transformation.ROTATE_RND, "aufgabe3"));
+        objects.add(new TriangleThing(new Vector3(-1, -2, -3), 1, Object.Transformation.ROTATE_RND, "aufgabe3"));
+        objects.add(new TriangleThing(new Vector3(1, 2, -3), 1, Object.Transformation.ROTATE_RND, "aufgabe3"));
+
 
         /*------------------------------------------------------------------------------------------------------------*/
         Matrix4 projectMat = new Matrix4(0.4F, 10F, 2, 2);
@@ -53,24 +53,19 @@ public class Aufgabe3undFolgende extends AbstractOpenGLBase {
 
         /*------------------------------------------------------------------------------------------------------------*/
 
-        light = new LightSource(new Vector3(4f, 0f, 1f), 5f);
-
         int lightPosID = glGetUniformLocation(shaderProgram.getId(), "lightPos");
         glUniform3fv(lightPosID, light.getPos().getAsArray());
 
         //----------------------------------------------------------------------------------------------------
     }
+
     @Override
     public void update() {
         objects.forEach(Object::update);
-        if(theme >= 10 && !textureLoaded) {
-            objects.forEach(e -> e.changeShader("aufgabeTexture"));
-            textureLoaded = true;
-        }
-        else if(theme < 10 && textureLoaded) {
-            objects.forEach(e -> e.changeShader("aufgabe3"));
-            textureLoaded = false;
-        }
+        objects.forEach(e -> e.setAngleX(xRotation));
+        objects.forEach(e -> e.setAngleY(yRotation));
+        objects.forEach(e -> e.setRotationSpeed(rotationSpeed));
+
     }
 
     @Override
@@ -78,13 +73,8 @@ public class Aufgabe3undFolgende extends AbstractOpenGLBase {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         for (int i = 0; i < objects.size(); i++) {
-            if(objectSelected[i]) objects.get(i).render();
+            if (objectSelected[i]) objects.get(i).render();
         }
-        objects.forEach(e -> e.setAngleX(xRotation));
-        objects.forEach(e -> e.setAngleY(yRotation));
-        objects.forEach(e -> e.setRotationSpeed(rotationSpeed));
-
-
 
 
         int focusID = glGetUniformLocation(shaderProgram.getId(), "focus");

@@ -1,13 +1,14 @@
 package ab3;
 
+import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
-public class testController {
+public class Controller {
 
 
     public Slider lightIntensity;
@@ -28,22 +29,27 @@ public class testController {
     public Label xRotationLabel;
     public Label yRotationLabel;
 
-    public ComboBox themes;
-    public Pane checkBoxList;
+    public ComboBox<Themes> themes;
     public Slider rotationSpeed;
     public Label rotationSpeedLabel;
+    public GridPane objectList;
 
     private Aufgabe3undFolgende aufgabe;
 
-
-    public void go() {
-        aufgabe = new Aufgabe3undFolgende();
-        changeObject();
-        aufgabe.start("CG Aufgabe 3", 1000, 1000);
-
+    @FXML
+    public void initialize() {
+        themes.getItems().addAll(Themes.values());
+        themes.setValue(Themes.RED);
     }
 
-    public void update() {
+    public void start(){
+        aufgabe = new Aufgabe3undFolgende();
+        setValues();
+        selectedObjects();
+        aufgabe.start("CG Aufgabe 3", 1000, 1000);
+    }
+
+    private void setValues(){
         setAmbientLightIntensity();
         setAmbientStrength();
         setDiffuseStrength();
@@ -52,6 +58,7 @@ public class testController {
         setSpecularStrength();
         setXRotation();
         setYRotation();
+        setRotationSpeed();
     }
 
     public void setLightIntensity() {
@@ -94,48 +101,44 @@ public class testController {
         yRotationLabel.setText("Y Rotation: " + String.format("%.2f", yRotation.getValue()));
     }
 
-    public void changeTheme() {
-        switch (themes.getValue().toString()) {
-            case ("Red"):
-                aufgabe.theme = 0;
-                break;
-            case ("Normals"):
-                aufgabe.theme = 1;
-                break;
-            case ("Different"):
-                aufgabe.theme = 2;
-                break;
-            case ("Different Triangle"):
-                aufgabe.theme = 3;
-                break;
-            case ("Rainbow"):
-                aufgabe.theme = 4;
-                break;
-            case ("Texture1"):
-                aufgabe.theme = 10;
-                break;
-            case ("Texture2"):
-                aufgabe.theme = 11;
-                break;
-            case ("Texture3"):
-                aufgabe.theme = 12;
-                break;
-            default:
-                aufgabe.theme = 0;
-                break;
-        }
-    }
-
-    public void changeObject() {
-        boolean[] objectSelected = new boolean[checkBoxList.getChildren().size()];
-        for (int i = 0; i < checkBoxList.getChildren().size(); i++) {
-            objectSelected[i] = ((CheckBox) checkBoxList.getChildren().get(i)).isSelected();
-        }
-        aufgabe.objectSelected = objectSelected;
-    }
-
     public void setRotationSpeed() {
         aufgabe.rotationSpeed = (float) rotationSpeed.getValue();
         rotationSpeedLabel.setText("Rotation Speed: " + String.format("%.2f", rotationSpeed.getValue()));
     }
+
+    //----------------------------------------------------------------------------------------------------
+    public void changeTheme() {
+        switch (themes.getValue()) {
+            case RED:
+                aufgabe.theme = 0;
+                break;
+            case NOR:
+                aufgabe.theme = 1;
+                break;
+            case DIF:
+                aufgabe.theme = 2;
+                break;
+            case DIF3:
+                aufgabe.theme = 3;
+                break;
+            case RAI:
+                aufgabe.theme = 4;
+                break;
+            case TEX1:
+                break;
+            case TEX2:
+                break;
+            case TEX3:
+                break;
+        }
+    }
+
+    public void selectedObjects() {
+        boolean[] objectSelected = new boolean[objectList.getChildren().size()];
+        for (int i = 0; i < objectList.getChildren().size(); i++) {
+            objectSelected[i] = ((CheckBox) objectList.getChildren().get(i)).isSelected();
+        }
+        aufgabe.objectSelected = objectSelected;
+    }
+
 }

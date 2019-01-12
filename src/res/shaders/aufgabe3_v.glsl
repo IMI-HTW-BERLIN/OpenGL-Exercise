@@ -12,10 +12,11 @@ out vec3 normalVector;
 uniform int theme;
 
 void rainbow(){
-    float tempR = abs(gl_Position.x);
-    float tempG = abs(gl_Position.y);
-    float tempB = abs(gl_Position.z);
-    color = vec3(tempR,tempG,tempB);
+    int r = int(mod((abs(mat[0][0]) + 50),100));
+    int g = int(mod((abs(mat[0][2]) + 50),200));
+    int b = int(mod((abs(mat[0][3]) + 50),50));
+    color = abs(mat[2].xyz);
+
 }
 
 void staticColorsCube() {

@@ -3,7 +3,7 @@ package ab3;
 class TriangleThing extends Object{
 
     TriangleThing(Vector3 position, float size, Object.Transformation transformation, String shader) {
-        init(triangleThing(), position, transformation,shader, uvCoordiantes());
+        init(triangleThing(), position, transformation,shader, uvCoordinates());
     }
 
     private float[] triangleThing() {
@@ -31,7 +31,7 @@ class TriangleThing extends Object{
         };
     }
 
-    private float[] uvCoordiantes() {
+    private float[] uvCoordinates() {
         return new float[]{
                 1,-1,
                 1,1,
