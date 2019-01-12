@@ -1,4 +1,4 @@
-package ab3;
+package ab3.Primary;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

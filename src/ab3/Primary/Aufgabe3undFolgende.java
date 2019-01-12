@@ -1,7 +1,10 @@
-package ab3;
+package ab3.Primary;
 
 import static org.lwjgl.opengl.GL30.*;
 
+import ab3.Objects.*;
+import ab3.Datatypes.*;
+import ab3.Objects.Object;
 import lenz.opengl.AbstractOpenGLBase;
 import lenz.opengl.ShaderProgram;
 
@@ -23,27 +26,23 @@ public class Aufgabe3undFolgende extends AbstractOpenGLBase {
     private ShaderProgram shaderProgram;
     LightSource light = new LightSource(new Vector3(4f, 0f, 1f), 5f);
     private List<Object> objects = new ArrayList<>();
+    private String shader = "aufgabe3";
     //----------------------------------------------------------------------------------------------------
 
     public static void main(String[] args) {
         new Aufgabe3undFolgende().start("CG Aufgabe 3", 2000, 2000);
     }
 
+
     Aufgabe3undFolgende() {
     }
 
     @Override
     protected void init() {
-        shaderProgram = new ShaderProgram("aufgabe3");
+        shaderProgram = new ShaderProgram(shader);
         glUseProgram(shaderProgram.getId());
+        addObjects();
 
-        objects.add(new Cube(new Vector3(0, 0, -2), 1, Object.Transformation.ROTATE_X, "aufgabe3"));
-        objects.add(new Cube(new Vector3(-1, 2, -2), 1, Object.Transformation.ROTATE_Y, "aufgabe3"));
-        objects.add(new Cube(new Vector3(2, -1, -3), 1, Object.Transformation.ROTATE_XY, "aufgabe3"));
-        objects.add(new Cube(new Vector3(0, -1, -6), 1, Object.Transformation.ROTATE_XY, "aufgabe3"));
-
-        objects.add(new TriangleThing(new Vector3(-1, -2, -3), 1, Object.Transformation.ROTATE_RND, "aufgabe3"));
-        objects.add(new TriangleThing(new Vector3(1, 2, -3), 1, Object.Transformation.ROTATE_RND, "aufgabe3"));
 
 
         /*------------------------------------------------------------------------------------------------------------*/
@@ -59,12 +58,27 @@ public class Aufgabe3undFolgende extends AbstractOpenGLBase {
         //----------------------------------------------------------------------------------------------------
     }
 
+    private void addObjects() {
+        objects.clear();
+        objects.add(new Cube(new Vector3(0, 0, -2), 1, Object.Transformation.ROTATE_XY, shader));
+        objects.add(new Cube(new Vector3(-1, 2, -2), 1, Object.Transformation.ROTATE_Y, shader));
+        objects.add(new Cube(new Vector3(2, -1, -3), 1, Object.Transformation.ROTATE_X, shader));
+        objects.add(new Cube(new Vector3(0, -1, -6), 1, Object.Transformation.ROTATE_XY, shader));
+
+        objects.add(new TriangleThing(new Vector3(-1, -2, -3), 1, Object.Transformation.ROTATE_X, shader));
+        objects.add(new TriangleThing(new Vector3(1, 2, -3), 1, Object.Transformation.ROTATE_Y, shader));
+    }
+
     @Override
     public void update() {
-        objects.forEach(Object::update);
-        objects.forEach(e -> e.setAngleX(xRotation));
-        objects.forEach(e -> e.setAngleY(yRotation));
-        objects.forEach(e -> e.setRotationSpeed(rotationSpeed));
+        for (int i = 0; i < objects.size(); i++) {
+            if (objectSelected[i]) {
+                objects.get(i).update();
+                objects.forEach(e -> e.setAngleX(xRotation));
+                objects.forEach(e -> e.setAngleY(yRotation));
+                objects.forEach(e -> e.setRotationSpeed(rotationSpeed));
+            }
+        }
 
     }
 
