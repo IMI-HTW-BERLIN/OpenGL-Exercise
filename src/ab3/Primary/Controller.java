@@ -41,14 +41,14 @@ public class Controller {
         themes.setValue(Themes.RED);
     }
 
-    public void start(){
+    public void start() {
         aufgabe = new Aufgabe3undFolgende();
         setValues();
         selectedObjects();
-        aufgabe.start("CG Aufgabe 3", 1000, 1000);
+        aufgabe.start("CG Aufgabe 3", 2000, 2000);
     }
 
-    private void setValues(){
+    private void setValues() {
         setAmbientLightIntensity();
         setAmbientStrength();
         setDiffuseStrength();
@@ -124,10 +124,33 @@ public class Controller {
                 aufgabe.theme = 4;
                 break;
             case TEX1:
+                aufgabe.setTexture(Themes.TEX1);
+                aufgabe.theme = 10;
                 break;
             case TEX2:
+                aufgabe.setTexture(Themes.TEX2);
+                aufgabe.theme = 10;
                 break;
             case TEX3:
+                aufgabe.setTexture(Themes.TEX3);
+                aufgabe.theme = 10;
+                break;
+            case TEX4:
+                aufgabe.setTexture(Themes.TEX4);
+                aufgabe.theme = 10;
+                break;
+            case TEX5:
+                aufgabe.setTexture(Themes.TEX5);
+                aufgabe.theme = 10;
+                break;
+            case GEN1:
+                aufgabe.theme = 20;
+                break;
+            case GEN2:
+                aufgabe.theme = 21;
+                break;
+            case GEN3:
+                aufgabe.theme = 22;
                 break;
         }
     }

@@ -1,54 +1,56 @@
 package ab3.Objects;
+
 import ab3.Datatypes.*;
+import ab3.Primary.Themes;
 
-public class TriangleThing extends Object{
+public class TriangleThing extends Object {
 
-    public TriangleThing(Vector3 position, float size, Object.Transformation transformation, String shader) {
-        init(triangleThing(), position, transformation, uvCoordinates(), shader);
+    public TriangleThing(Vector3 position, float size, Object.Transformation transformation, String shader, Themes texture) {
+        init(triangleThing(size / 2), position, transformation, uvCoordinates(), shader, texture);
     }
 
-    private float[] triangleThing() {
-        float val = (float) (Math.sqrt(3) / 2);
+    private float[] triangleThing(float size) {
+        float val = (float) (size * (Math.sqrt(3) / 2));
         return new float[]{
                 //front
-                0.5f, val, 0,
-                -0.5f, val, 0,
-                0, -val, 0.5f,
+                size, val, 0,
+                -size, val, 0,
+                0, -val, size,
 
                 //left
-                -0.5f, val, 0,
-                0, -val, -0.5f,
-                0, -val, 0.5f,
+                -size, val, 0,
+                0, -val, -size,
+                0, -val, size,
 
                 //right
-                0.5f, val, 0,
-                0, -val, 0.5f,
-                0, -val, -0.5f,
+                size, val, 0,
+                0, -val, size,
+                0, -val, -size,
 
                 //back
-                -0.5f, val, 0,
-                0.5f, val, 0,
-                0, -val, -0.5f
+                -size, val, 0,
+                size, val, 0,
+                0, -val, -size
         };
     }
 
     private float[] uvCoordinates() {
         return new float[]{
-                1,-1,
-                1,1,
-                -1,-1,
+                1, 0,
+                0, 0,
+                0.5f, 1,
 
-                1,-1,
-                1,1,
-                -1,-1,
+                0.5f, 1,
+                0, 0,
+                1, 0,
 
-                1,-1,
-                1,1,
-                -1,-1,
+                0.5f, 1,
+                0, 0,
+                1, 0,
 
-                1,-1,
-                1,1,
-                -1,-1,
+                1, 0,
+                0, 0,
+                0.5f, 1,
 
 
         };

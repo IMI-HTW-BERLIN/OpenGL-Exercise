@@ -1,6 +1,7 @@
 package ab3.Objects;
 
 import ab3.Datatypes.*;
+import ab3.Primary.Themes;
 import lenz.opengl.ShaderProgram;
 import lenz.opengl.Texture;
 
@@ -13,15 +14,14 @@ import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
 import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
-import static org.lwjgl.opengl.GL30.glGenVertexArrays;
+import static org.lwjgl.opengl.GL30.*;
 
 public abstract class Object {
     private ShaderProgram shaderProgram;
     private float[] edges;
     private float[] uvCoordinates;
     private Vector3 position;
-    private Matrix4 mat = new Matrix4();
+    private Matrix4 mat;
     private float angleX = 0;
     private float angleY = 0;
     private float currentAngleX = 0;
@@ -34,43 +34,49 @@ public abstract class Object {
     private Transformation transformation;
 
     private String shader;
+    private String texture;
 
     private int vaold;
 
 
-    void init(float[] edges, Vector3 position, Transformation transformation, float[] uvCoordinates, String shader) {
+    void init(float[] edges, Vector3 position, Transformation transformation, float[] uvCoordinates, String shader, Themes texture) {
         shaderProgram = new ShaderProgram(shader);
         glUseProgram(shaderProgram.getId());
         this.edges = edges;
         this.position = position;
         this.transformation = transformation;
         this.uvCoordinates = uvCoordinates;
-
+        this.texture = texture.toString();
+        this.mat = new Matrix4();
+        //----------------------------------------------------------------------------------------------------
         vaold = glGenVertexArrays();
         glBindVertexArray(vaold);
+        //----------------------------------------------------------------------------------------------------
         int vbold = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vbold);
         glBufferData(GL_ARRAY_BUFFER, edges, GL_STATIC_DRAW);
         glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
         glEnableVertexAttribArray(0);
-
+        //----------------------------------------------------------------------------------------------------
         float[] normals = getNormals();
-
         vbold = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vbold);
         glBufferData(GL_ARRAY_BUFFER, normals, GL_STATIC_DRAW);
         glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, 0);
         glEnableVertexAttribArray(1);
-
+        //----------------------------------------------------------------------------------------------------
         vbold = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vbold);
         glBufferData(GL_ARRAY_BUFFER, uvCoordinates, GL_STATIC_DRAW);
         glVertexAttribPointer(2, 2, GL_FLOAT, false, 0, 0);
         glEnableVertexAttribArray(2);
-
-        Texture textureID = new Texture("stoneBlock.png");
+        //----------------------------------------------------------------------------------------------------
+        Texture textureID = new Texture(this.texture);
         glBindTexture(GL_TEXTURE_2D, textureID.getId());
-
+        glGenerateMipmap(GL_TEXTURE_2D);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+        //----------------------------------------------------------------------------------------------------
         glEnable(GL_DEPTH_TEST); // z-Buffer aktivieren
         glEnable(GL_CULL_FACE); // backface culling aktivieren
     }
@@ -80,13 +86,18 @@ public abstract class Object {
         this.mat.translate(position.x(), position.y(), position.z());
     }
 
+    public void resetMat(){
+        this.mat = new Matrix4();
+    }
+
     public void render() {
         glBindVertexArray(vaold);
         glDrawArrays(GL_TRIANGLES, 0, edges.length / 3);
-        glBindVertexArray(0);
 
         int loc = glGetUniformLocation(shaderProgram.getId(), "mat");
         glUniformMatrix4fv(loc, false, mat.getValuesAsArray());
+
+        glBindVertexArray(0);
     }
     //----------------------------------------------------------------------------------------------------
 
@@ -104,6 +115,8 @@ public abstract class Object {
         }
         return normals;
     }
+
+    //----------------------------------------------------------------------------------------------------
 
     public void setAngleX(float angleX) {
         this.angleX = angleX;
@@ -134,6 +147,10 @@ public abstract class Object {
 
     public void setRotationSpeed(float rotationSpeed) {
         this.rotationSpeed = rotationSpeed;
+    }
+
+    public void setTexture(String texture) {
+        this.texture = texture;
     }
 
 
