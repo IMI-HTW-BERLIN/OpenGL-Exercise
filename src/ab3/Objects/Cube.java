@@ -11,6 +11,7 @@ public class Cube extends Object{
 
     private float[] cube(float size) {
         return new float[]{
+                //front
                 size, -size, size,
                 size, size, size,
                 -size, -size, size,
@@ -19,7 +20,7 @@ public class Cube extends Object{
                 -size, -size, size,
                 size, size, size,
 
-
+                //right
                 size, -size, size,
                 size, -size, -size,
                 size, size, -size,
@@ -28,7 +29,7 @@ public class Cube extends Object{
                 size, size, size,
                 size, -size, size,
 
-
+                //top
                 -size, size, size,
                 size, size, size,
                 size, size, -size,
@@ -37,7 +38,7 @@ public class Cube extends Object{
                 -size, size, -size,
                 -size, size, size,
 
-
+                //back
                 -size, size, -size,
                 size, size, -size,
                 size, -size, -size,
@@ -46,7 +47,7 @@ public class Cube extends Object{
                 -size, -size, -size,
                 -size, size, -size,
 
-
+                //bottom
                 -size, -size, size,
                 -size, -size, -size,
                 size, -size, -size,
@@ -55,7 +56,7 @@ public class Cube extends Object{
                 size, -size, size,
                 -size, -size, size,
 
-
+                //left
                 -size, -size, size,
                 -size, size, size,
                 -size, size, -size,
@@ -69,47 +70,48 @@ public class Cube extends Object{
 
     private float[] uvCoordinates() {
         return new float[]{
-                1,0,
+                //front
                 1,1,
-                0,0,
+                1,0,
                 0,1,
                 0,0,
-                1,1,
-
                 0,1,
-                0,0,
                 1,0,
-                1,0,
-                1,1,
-                0,1,
-
+                //right
                 0,1,
                 1,1,
                 1,0,
                 1,0,
                 0,0,
                 0,1,
-
+                //top
                 0,1,
                 1,1,
                 1,0,
                 1,0,
                 0,0,
                 0,1,
-
-                0,1,
-                0,0,
-                1,0,
-                1,0,
-                1,1,
-                0,1,
-
-                0,1,
-                1,1,
-                1,0,
+                //back
                 1,0,
                 0,0,
                 0,1,
+                0,1,
+                1,1,
+                1,0,
+                //bottom
+                1,1,
+                1,0,
+                0,0,
+                0,0,
+                0,1,
+                1,1,
+                //left
+                1,1,
+                1,0,
+                0,0,
+                0,0,
+                0,1,
+                1,1,
         };
     }
 }

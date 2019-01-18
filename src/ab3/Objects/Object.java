@@ -19,7 +19,6 @@ import static org.lwjgl.opengl.GL30.*;
 public abstract class Object {
     private ShaderProgram shaderProgram;
     private float[] edges;
-    private float[] uvCoordinates;
     private Vector3 position;
     private Matrix4 mat;
     private float angleX = 0;
@@ -33,9 +32,6 @@ public abstract class Object {
 
     private Transformation transformation;
 
-    private String shader;
-    private String texture;
-
     private int vaold;
 
 
@@ -45,8 +41,6 @@ public abstract class Object {
         this.edges = edges;
         this.position = position;
         this.transformation = transformation;
-        this.uvCoordinates = uvCoordinates;
-        this.texture = texture.toString();
         this.mat = new Matrix4();
         //----------------------------------------------------------------------------------------------------
         vaold = glGenVertexArrays();
@@ -71,10 +65,10 @@ public abstract class Object {
         glVertexAttribPointer(2, 2, GL_FLOAT, false, 0, 0);
         glEnableVertexAttribArray(2);
         //----------------------------------------------------------------------------------------------------
-        Texture textureID = new Texture(this.texture);
+        Texture textureID = new Texture(texture.toString());
         glBindTexture(GL_TEXTURE_2D, textureID.getId());
         glGenerateMipmap(GL_TEXTURE_2D);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
         //----------------------------------------------------------------------------------------------------
         glEnable(GL_DEPTH_TEST); // z-Buffer aktivieren
@@ -86,16 +80,12 @@ public abstract class Object {
         this.mat.translate(position.x(), position.y(), position.z());
     }
 
-    public void resetMat(){
-        this.mat = new Matrix4();
-    }
-
     public void render() {
         glBindVertexArray(vaold);
-        glDrawArrays(GL_TRIANGLES, 0, edges.length / 3);
 
         int loc = glGetUniformLocation(shaderProgram.getId(), "mat");
         glUniformMatrix4fv(loc, false, mat.getValuesAsArray());
+        glDrawArrays(GL_TRIANGLES, 0, edges.length / 3);
 
         glBindVertexArray(0);
     }
@@ -149,9 +139,6 @@ public abstract class Object {
         this.rotationSpeed = rotationSpeed;
     }
 
-    public void setTexture(String texture) {
-        this.texture = texture;
-    }
 
 
 }

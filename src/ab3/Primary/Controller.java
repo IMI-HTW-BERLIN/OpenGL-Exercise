@@ -1,10 +1,8 @@
 package ab3.Primary;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 public class Controller {
@@ -34,6 +32,7 @@ public class Controller {
     public GridPane objectList;
 
     private Aufgabe3undFolgende aufgabe;
+    private boolean started = false;
 
     @FXML
     public void initialize() {
@@ -41,11 +40,14 @@ public class Controller {
         themes.setValue(Themes.RED);
     }
 
-    public void start() {
-        aufgabe = new Aufgabe3undFolgende();
-        setValues();
-        selectedObjects();
-        aufgabe.start("CG Aufgabe 3", 2000, 2000);
+    public void startOpenGL() {
+        if(!started) {
+            started = true;
+            aufgabe = new Aufgabe3undFolgende();
+            setValues();
+            selectedObjects();
+            aufgabe.start("CG", 1000,1000);
+        }
     }
 
     private void setValues() {
@@ -102,7 +104,7 @@ public class Controller {
 
     public void setRotationSpeed() {
         aufgabe.rotationSpeed = (float) rotationSpeed.getValue();
-        rotationSpeedLabel.setText("Rotation Speed: " + String.format("%.2f", rotationSpeed.getValue()));
+        rotationSpeedLabel.setText("Rotation Speed: " + String.format("%.2f", rotationSpeed.getValue()*100));
     }
 
     //----------------------------------------------------------------------------------------------------
@@ -162,5 +164,6 @@ public class Controller {
         }
         aufgabe.objectSelected = objectSelected;
     }
+
 
 }

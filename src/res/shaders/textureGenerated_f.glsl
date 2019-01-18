@@ -25,6 +25,13 @@ out vec3 pixelColor;
 
 vec3 generateChessBoard(){
     vec3 color;
+    float size = 0.1;
+    if(mod(round(uv.x/size),2) != 0 && mod(round(uv.y/size),2) != 0) color = vec3(1.0,1.0,1.0);
+    else color = vec3(0,0,0);
+    return color;
+}
+vec3 generateChessBoardSmall(){
+    vec3 color;
     float size = 0.01;
     if(mod(round(uv.x/size),2) != 0 && mod(round(uv.y/size),2) != 0) color = vec3(1.0,1.0,1.0);
     else color = vec3(0,0,0);
@@ -67,7 +74,7 @@ void main() {
         pixelColor = generateTexture() * light;
      break;
      case 22:
-        pixelColor = generateChessBoard() * light;
+        pixelColor = generateChessBoardSmall() * light;
      break;
     }
 

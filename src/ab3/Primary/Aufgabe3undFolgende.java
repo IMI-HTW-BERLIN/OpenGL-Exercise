@@ -25,14 +25,15 @@ public class Aufgabe3undFolgende extends AbstractOpenGLBase {
     boolean[] objectSelected;
     /*------------------------------------------------------------------------------------------------------------*/
     private ShaderProgram shaderProgram;
-    LightSource light = new LightSource(new Vector3(4f, 0f, 1f), 5f);
+    LightSource light = new LightSource(new Vector3(4f, 0f, 0f), 5f);
     private List<Object> objects = new ArrayList<>();
     private String shader = "aufgabe3";
     private Themes currentTexture = Themes.TEX1;
+    private InputHandler inputHandler;
     //----------------------------------------------------------------------------------------------------
 
     public static void main(String[] args) {
-        new Aufgabe3undFolgende().start("CG Aufgabe 3", 2000, 2000);
+        new Aufgabe3undFolgende().start("CG Aufgabe 3", 1000, 1000);
     }
 
 
@@ -46,16 +47,15 @@ public class Aufgabe3undFolgende extends AbstractOpenGLBase {
         addObjects();
 
         /*------------------------------------------------------------------------------------------------------------*/
-        Matrix4 projectMat = new Matrix4(0.4F, 10F, 2, 2);
+        Matrix4 projectMat = new Matrix4(0.6F, 100F, 2, 2);
         int loc = glGetUniformLocation(shaderProgram.getId(), "projectMat");
         glUniformMatrix4fv(loc, false, projectMat.getValuesAsArray());
 
         /*------------------------------------------------------------------------------------------------------------*/
 
-        int lightPosID = glGetUniformLocation(shaderProgram.getId(), "lightPos");
-        glUniform3fv(lightPosID, light.getPos().getAsArray());
-
         //----------------------------------------------------------------------------------------------------
+        inputHandler = new InputHandler(window,light);
+
     }
 
     private void addObjects() {
@@ -68,12 +68,13 @@ public class Aufgabe3undFolgende extends AbstractOpenGLBase {
         objects.add(new TriangleThing(new Vector3(-1, -2, -3), 1, Object.Transformation.ROTATE_X, shader, currentTexture));
         objects.add(new TriangleThing(new Vector3(1, 2, -3), 1, Object.Transformation.ROTATE_Y, shader, currentTexture));
         objects.add(new TriangleThing(new Vector3(0, -1, -2), 1, Object.Transformation.ROTATE_Y, shader, currentTexture));
-        objects.add(new TriangleThing(new Vector3(0, 0, -1), 1, Object.Transformation.ROTATE_Y, shader, currentTexture));
+        objects.add(new TriangleThing(new Vector3(0, 0, -6), 6, Object.Transformation.ROTATE_Y, shader, currentTexture));
 
     }
 
     @Override
     public void update() {
+        inputHandler.moveLight();
         switch (theme) {
             case 10:
                 if (!shader.equals("aufgabeTexture")) changeShader("aufgabeTexture");
@@ -89,15 +90,10 @@ public class Aufgabe3undFolgende extends AbstractOpenGLBase {
         }
 
 
-        for (Object object :
-                objects) {
-            object.resetMat();
-            object.update();
-        }
+        objects.forEach(Object::update);
         objects.forEach(e -> e.setAngleX(xRotation));
         objects.forEach(e -> e.setAngleY(yRotation));
         objects.forEach(e -> e.setRotationSpeed(rotationSpeed));
-
 
     }
 
@@ -130,7 +126,8 @@ public class Aufgabe3undFolgende extends AbstractOpenGLBase {
         int themeID = glGetUniformLocation(shaderProgram.getId(), "theme");
         glUniform1i(themeID, theme);
 
-
+        int lightPosID = glGetUniformLocation(shaderProgram.getId(), "lightPos");
+        glUniform3fv(lightPosID, light.getPos().getAsArray());
     }
 
     private void changeShader(String shader) {

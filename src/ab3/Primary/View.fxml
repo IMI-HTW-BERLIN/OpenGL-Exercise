@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2"
-            fx:controller="ab3.Primary.Controller">
-    <ComboBox fx:id="themes" layoutX="14.0" layoutY="188.0" onAction="#changeTheme" prefHeight="33.0" prefWidth="179.0"
+            onMouseMoved="#startOpenGL" prefHeight="875.0" xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/2.2" fx:controller="ab3.Primary.Controller">
+    <ComboBox fx:id="themes" layoutX="7.0" layoutY="288.0" onAction="#changeTheme" prefHeight="33.0" prefWidth="179.0"
               promptText="Themes"/>
-    <GridPane fx:id="objectList" layoutX="12.0" layoutY="46.0" prefHeight="119.0" prefWidth="186.0">
+    <GridPane fx:id="objectList" layoutX="5.0" layoutY="146.0" prefHeight="119.0" prefWidth="186.0">
         <CheckBox mnemonicParsing="false" onAction="#selectedObjects" selected="true" text="Cube 1"
                   GridPane.columnIndex="0" GridPane.rowIndex="0"/>
         <CheckBox mnemonicParsing="false" onAction="#selectedObjects" text="Cube 2" GridPane.columnIndex="0"
                   GridPane.rowIndex="1"/>
         <CheckBox mnemonicParsing="false" onAction="#selectedObjects" text="Cube 3" GridPane.columnIndex="0"
                   GridPane.rowIndex="2"/>
-        <CheckBox mnemonicParsing="false" onAction="#selectedObjects" text="Cube 4" GridPane.columnIndex="0"
+        <CheckBox mnemonicParsing="false" onAction="#selectedObjects" text="Big Cube" GridPane.columnIndex="0"
                   GridPane.rowIndex="3"/>
         <CheckBox mnemonicParsing="false" onAction="#selectedObjects" text="Triangle 1" GridPane.columnIndex="1"
                   GridPane.rowIndex="0"/>
@@ -24,7 +24,7 @@
                   GridPane.rowIndex="1"/>
         <CheckBox mnemonicParsing="false" onAction="#selectedObjects" text="Triangle 3" GridPane.columnIndex="1"
                   GridPane.rowIndex="2"/>
-        <CheckBox mnemonicParsing="false" onAction="#selectedObjects" text="Triangle 4" GridPane.columnIndex="1"
+        <CheckBox mnemonicParsing="false" onAction="#selectedObjects" text="Big Triangle" GridPane.columnIndex="1"
                   GridPane.rowIndex="3"/>
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
@@ -37,7 +37,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
         </rowConstraints>
     </GridPane>
-    <GridPane layoutX="11.0" layoutY="248.0" prefHeight="354.0" prefWidth="186.0">
+    <GridPane layoutX="4.0" layoutY="348.0" prefHeight="354.0" prefWidth="186.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
         </columnConstraints>
@@ -85,7 +85,7 @@
                 onMouseDragged="#setSpecularStrength" showTickMarks="true" value="0.4" GridPane.columnIndex="0"
                 GridPane.rowIndex="11"/>
     </GridPane>
-    <GridPane layoutX="10.0" layoutY="601.0" prefHeight="175.0" prefWidth="186.0">
+    <GridPane layoutX="3.0" layoutY="701.0" prefHeight="175.0" prefWidth="186.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
         </columnConstraints>
@@ -106,16 +106,11 @@
                 onKeyReleased="#setYRotation" onMouseClicked="#setYRotation" onMouseDragged="#setYRotation"
                 prefWidth="97.0" showTickMarks="true" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
         <Label fx:id="rotationSpeedLabel" text="Rotation Speed: " GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-        <Slider fx:id="rotationSpeed" blockIncrement="0.1" majorTickUnit="0.01" max="0.2" minorTickCount="1"
+        <Slider fx:id="rotationSpeed" blockIncrement="0.001" majorTickUnit="0.01" max="0.2" minorTickCount="1"
                 onKeyReleased="#setRotationSpeed" onMouseClicked="#setRotationSpeed" onMouseDragged="#setRotationSpeed"
-                showTickMarks="true" value="0.05" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                showTickMarks="true" value="0.005" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
     </GridPane>
-    <Button fx:id="start" layoutX="11.0" layoutY="776.0" mnemonicParsing="false" onAction="#start" prefWidth="186.0"
-            text="Start"/>
-    <Label layoutX="-2.0" prefWidth="210.0" text="DO NOT ADJUST BEFORE PRESSING START" textAlignment="CENTER"
-           wrapText="true">
-        <font>
-            <Font name="System Bold" size="16.0"/>
-        </font>
-    </Label>
+    <TextArea prefHeight="146.0" prefWidth="191.0"
+              text="Light Position Controls:&#10;W - UP&#10;A - LEFT&#10;S - DOWN&#10;D - RIGHT&#10;R - RESET&#10;(P.S. Hover over the Controller to start)"
+              wrapText="true"/>
 </AnchorPane>

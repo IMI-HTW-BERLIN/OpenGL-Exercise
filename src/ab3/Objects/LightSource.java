@@ -23,8 +23,12 @@ public class LightSource {
         return  intensity;
     }
 
-    void setPos(Vector3 pos){
+    public void setPos(Vector3 pos){
         this.pos = new Vector3(pos.x(),pos.y(),this.pos.z());
+    }
+
+    public void setPos(float x, float y, float z){
+        this.pos = new Vector3(x,y,z);
     }
 
 
