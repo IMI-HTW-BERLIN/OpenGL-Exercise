@@ -32,11 +32,6 @@ public class Aufgabe3undFolgende extends AbstractOpenGLBase {
     private InputHandler inputHandler;
     //----------------------------------------------------------------------------------------------------
 
-    public static void main(String[] args) {
-        new Aufgabe3undFolgende().start("CG Aufgabe 3", 1000, 1000);
-    }
-
-
     Aufgabe3undFolgende() {
     }
 

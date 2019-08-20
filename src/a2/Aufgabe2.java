@@ -9,9 +9,9 @@ public class Aufgabe2 extends AbstractOpenGLBase {
 
     private ShaderProgram shaderProgram;
 
-    public static void main(String[] args) {
-        new Aufgabe2().start("CG Aufgabe 2", 1000, 1000);
-    }
+    //public static void main(String[] args) {
+        //new Aufgabe2().start("CG Aufgabe 2", 1000, 1000);
+    //}
 
     float[] dreiecke;
 

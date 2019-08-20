@@ -7,9 +7,9 @@ import lenz.opengl.ShaderProgram;
 
 public class Aufgabe1 extends AbstractOpenGLBase {
 
-	public static void main(String[] args) {
-		new Aufgabe1().start("CG Aufgabe 1", 700, 700);
-	}
+	//public static void main(String[] args) {
+		//new Aufgabe1().start("CG Aufgabe 1", 700, 700);
+	//}
 
 	@Override
 	protected void init() {
